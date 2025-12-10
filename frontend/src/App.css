@@ -53,50 +53,52 @@ body {
   font-weight: 500;
 }
 
-/* --- HERO SECTION (Final Polish) --- */
-
-/* 1. The Main Container */
+/* --- 2. HERO SECTION (Responsive) --- */
+/* --- 2. HERO SECTION (Split Layout - Image Fully Visible) --- */
 .hero {
+  min-height: 100vh; /* Full screen height */
   display: flex;
-  width: 100%;
+  flex-direction: row; /* Side by side on Desktop */
+  align-items: stretch; /* Stretch both sides to full height */
+  padding: 0; /* Remove padding so image touches edges */
   position: relative;
   overflow: hidden;
-  /* DESKTOP: Side-by-Side, Full Height */
-  min-height: 100vh; 
-  flex-direction: row; 
-  align-items: stretch; /* Ensures both sides are equal height */
 }
 
-/* 2. Left Side: The Image Slider */
+/* LEFT SIDE: The Image */
 .hero-img-container {
-  width: 50%; /* Half screen */
+  width: 50%; /* Takes up half the screen */
   position: relative;
+  top: 0; left: 0;
+  height: auto;
+  transform: none; /* Remove centering transform */
   z-index: 1;
 }
 
-/* Force Swiper to fit */
-.swiper {
+.hero-img-container img {
   width: 100%;
   height: 100%;
-}
-.swiper-slide img {
+  object-fit: cover; /* Ensures image fills the half-screen without stretching */
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
 }
 
-/* 3. Right Side: The Text Content */
+/* RIGHT SIDE: The Text */
 .hero-content {
-  width: 50%; /* Half screen */
+  width: 50%; /* Takes up other half */
   display: flex;
   flex-direction: column;
-  justify-content: center; /* VERTICAL CENTER (Fixes your issue) */
-  align-items: flex-start; /* Left align text on desktop */
-  padding: 80px;
-  background: rgba(253, 251, 247, 0.95); /* Slight texture see-through */
+  justify-content: center;
+  align-items: flex-start; /* Align text to left */
+  padding: 80px; /* Breathing room */
+  background: var(--bg-color); /* Solid background color */
+  text-align: left;
   z-index: 2;
+  
+  /* Remove old box styles */
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  margin-top: 0;
 }
 
 .hero h1 {
@@ -117,87 +119,83 @@ body {
   max-width: 400px;
 }
 
-/* --- MOBILE LAYOUT (Stacked) --- */
+/* --- MOBILE ADJUSTMENTS (Stack them) --- */
 @media (max-width: 768px) {
   .hero {
-    flex-direction: column; /* Stack them */
-    min-height: 100vh; /* Keep full screen feel */
+    flex-direction: column; /* Stack vertically on phone */
+    min-height: auto;
   }
 
   .hero-img-container {
-    width: 100%;
-    height: 60vh; /* Image takes top 60% */
+    width: 100%; /* Full width on phone */
+    height: 60vh; /* Takes up 60% of phone screen height */
   }
 
   .hero-content {
     width: 100%;
-    height: 40vh; /* Text takes bottom 40% */
-    padding: 30px 20px;
-    align-items: center; /* Center text horizontally */
+    padding: 40px 20px; /* Less padding on phone */
+    align-items: center; /* Center text on phone */
     text-align: center;
-    justify-content: center; /* Center text vertically */
-    background: #FDFBF7; /* Solid color for readability */
+    background: white;
   }
 
-  .hero h1 {
-    font-size: 3rem; /* Smaller font on phone */
-  }
-
-  .hero p {
-    font-size: 1rem;
-    margin-top: 15px;
-    max-width: 100%;
-  }
+  .hero h1 { font-size: 3rem; }
 }
 
-/* --- 3. MANIFESTO SECTION (The Brand Ethos) --- */
+/* --- 3. MANIFESTO --- */
 .manifesto-section {
-  padding: 100px 20px; /* Lots of breathing room */
-  background-color: var(--bg-color); /* Matches your off-white theme */
+  padding: 80px 20px;
   text-align: center;
-  max-width: 900px;
+  max-width: 800px;
   margin: 0 auto;
-  border-bottom: 1px solid rgba(0,0,0,0.05); /* Subtle divider line */
 }
-
 .manifesto-text {
-  font-family: var(--font-heading); /* Cormorant Garamond */
-  font-size: 2.2rem; /* Large, readable text */
-  line-height: 1.5;
-  color: var(--primary); /* Deep Charcoal */
-  font-weight: 400;
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  line-height: 1.4;
+  color: var(--primary);
 }
-
-/* The word "soul" gets special treatment */
 .highlight {
+  color: var(--accent);
   font-style: italic;
-  font-weight: 600;
-  color: var(--accent); /* Sage Green or Gold */
-  position: relative;
-  display: inline-block;
 }
-
-/* Optional: Add a subtle underline to the highlight word */
-.highlight::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  bottom: 5px;
-  left: 0;
-  background-color: rgba(165, 165, 141, 0.3); /* Faint underline */
+/* --- PROCESS SECTION --- */
+.process-section {
+  padding: 60px 20px;
+  background: #fdfbf7;
+  text-align: center;
 }
-
-/* Mobile Adjustment */
-@media (max-width: 768px) {
-  .manifesto-section {
-    padding: 60px 20px;
-  }
-  .manifesto-text {
-    font-size: 1.5rem; /* Smaller but still impactful on phone */
-  }
+.process-grid {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 40px;
 }
-
+.process-step {
+  max-width: 250px;
+  text-align: center;
+}
+.step-number {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  color: #e0e0e0; /* Very subtle gray */
+  line-height: 1;
+  margin-bottom: 10px;
+}
+.step-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: var(--primary);
+}
+.step-desc {
+  font-size: 0.8rem;
+  color: #666;
+  line-height: 1.5;
+}
 /* --- 4. FORM SECTION --- */
 .form-section {
   padding: 80px 20px;
@@ -358,7 +356,6 @@ label {
   color: #aaa;
 }
 /* --- ANIMATED WHATSAPP BUTTON --- */
-/* --- LUXURY CONCIERGE BUTTON --- */
 .whatsapp-float {
   position: fixed;
   bottom: 30px;
@@ -397,8 +394,6 @@ label {
   border-radius: 50%;
   margin-left: 5px;
 }
-
-
 @keyframes pulse-green {
   0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
   70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
@@ -528,42 +523,16 @@ label {
 .brand-filter, .watermark {
   z-index: 2;
 }
-/* --- FEATURES SECTION --- */
-.features-section {
-  padding: 80px 20px;
-  background: white;
-  text-align: center;
-}
-.features-grid {
-  display: flex;
-  justify-content: center;
-  gap: 50px;
-  flex-wrap: wrap;
-  max-width: 1000px;
-  margin: 40px auto 0;
-}
-.feature-card {
-  flex: 1;
-  min-width: 200px;
-}
-.feature-icon {
-  font-size: 2rem;
-  color: var(--primary);
-  margin-bottom: 20px;
-  display: block;
-}
-.feature-card h4 {
-  font-family: var(--font-heading);
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  color: var(--primary);
-}
-.feature-card p {
-  font-size: 0.9rem;
-  color: #666;
-  line-height: 1.6;
+/* SIMPLE FADE IN ANIMATION */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
+/* Apply this class to sections you want to animate */
+.animate-up {
+  animation: fadeInUp 1s ease-out forwards;
+}
 /* --- FAQ SECTION --- */
 .faq-section {
   padding: 80px 20px;
@@ -633,57 +602,3 @@ label {
   cursor: pointer;
 }
 .footer-col li:hover { color: #fff; }
-/* --- SWIPER OVERLAP FIX --- */
-.swiper-slide {
-  background-color: #FDFBF7; /* Same color as your site background */
-  width: 100% !important;
-  height: 100% !important;
-  overflow: hidden; /* Cuts off anything sticking out */
-}
-
-.swiper-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Forces image to fill the box exactly */
-}
-/* --- APP.CSS ADDITIONS --- */
-
-/* 1. The Black Slide Container */
-.black-slide {
-  background: linear-gradient(135deg, #1c1c1c 0%, #000000 100%) !important;
-  color: #ffffff;
-  
-  /* Flexbox Centering */
-  display: flex !important;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-/* 2. The Main Headline */
-.wait-msg {
-  font-family: 'Playfair Display', serif; /* Or 'Cormorant Garamond' since you use it elsewhere */
-  font-size: 2.5rem;
-  font-weight: 300;
-  letter-spacing: 2px;
-  margin-bottom: 1.5rem;
-  color: #e0e0e0;
-  text-transform: uppercase;
-}
-
-/* 3. The Subtext */
-.wait-sub {
-  font-family: 'Jost', sans-serif; /* Matching your existing font */
-  font-size: 1.1rem;
-  opacity: 0.8;
-  line-height: 1.6;
-}
-
-/* Mobile Tweak */
-@media (max-width: 768px) {
-  .wait-msg {
-    font-size: 1.8rem;
-    padding: 0 15px;
-  }
-}

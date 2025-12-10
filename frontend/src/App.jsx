@@ -10,6 +10,7 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/pagination';
 
 import heroImageImage from './assets/heroImage.jpeg'
+
 const slides = [
   heroImageImage, 
 ];
@@ -111,35 +112,20 @@ function App() {
         <header className="hero">
           <div className="hero-img-container">
               <Swiper
-  modules={[Autoplay, EffectFade, Pagination]}
-  effect={'fade'}
-  fadeEffect={{ crossFade: true }}
-  speed={1000}
-  autoplay={{ delay: 4000, disableOnInteraction: false }}
-  pagination={{ clickable: true }}
-  loop={true}
-  style={{ width: '100%', height: '100%' }}
->
-  {/* SLIDE 1: The Hero Image */}
-  <SwiperSlide>
-    <img 
-      src={heroImageImage} 
-      alt="Sharome Bespoke Detail" 
-      style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center'}} 
-    />
-  </SwiperSlide>
-
-  {/* SLIDE 2: The Black Message Slide */}
-  <SwiperSlide className="black-slide">
-    <div className="text-content">
-      <h2 className="wait-msg">MASTERPIECES IN THE MAKING.</h2>
-      <p className="wait-sub">
-        We are stitching the final details.<br />
-        A complete digital runway is coming.
-      </p>
-    </div>
-  </SwiperSlide>
-</Swiper>
+                modules={[Autoplay, EffectFade, Pagination]}
+                effect={'fade'} // Use 'slide' if you prefer sliding over fading
+                speed={1500}
+                autoplay={{ delay: 4000, disableOnInteraction: false }}
+                pagination={{ clickable: true }} // Adds dots at the bottom
+                loop={true}
+                style={{ width: '100%', height: '100%' }}
+              >
+                {slides.map((slide, index) => (
+                  <SwiperSlide key={index}>
+                    <img src={slide} alt={`Sharome Look ${index}`} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
               
               {/* Overlays remain on top */}
               <div className="brand-filter"></div>
@@ -150,32 +136,37 @@ function App() {
             <p>The new language of Indian Ethnic Wear.</p>
           </div>
         </header>
+
+        {/* ... (The rest of your Manifesto, Form, Footer code remains exactly the same) ... */}
+        
+        {/* Paste the rest of your sections here (Manifesto, Reviews, Form, Footer, WhatsApp) from previous code */}
+        {/* I am omitting them here to save space, but DO NOT DELETE THEM in your file */}
          <section className="manifesto-section">
           <p className="manifesto-text">
             "Fashion shouldn't just fit your body, it should fit your <span className="highlight">soul</span>. 
             Sharomé is inviting 50 muses to experience the luxury of true custom tailoring."
           </p>
         </section>
-        {/* 3.1 FEATURES (Why Us) */}
-      <section className="features-section">
-        <div className="features-grid">
-          <div className="feature-card">
-            <span className="feature-icon">✨</span>
-            <h4>Unique Designs</h4>
-            <p>We don't do mass production. Every piece is designed from scratch based on your vision.</p>
-          </div>
-          <div className="feature-card">
-            <span className="feature-icon">📏</span>
-            <h4>Precision Fit</h4>
-            <p>Our master tailors ensure a silhouette that compliments your body type perfectly.</p>
-          </div>
-          <div className="feature-card">
-            <span className="feature-icon">🚚</span>
-            <h4>Doorstep Service</h4>
-            <p>From fabric pickup to final delivery, you never have to leave your home.</p>
-          </div>
-        </div>
-      </section>
+        <section className="process-section">
+  <h2 style={{ fontFamily: 'Cormorant Garamond', fontSize: '2rem', color: '#2C3E50' }}>The Journey</h2>
+  <div className="process-grid">
+    <div className="process-step">
+      <div className="step-number">01</div>
+      <div className="step-title">The Vision</div>
+      <p className="step-desc">Submit your references or sketch via our secure portal.</p>
+    </div>
+    <div className="process-step">
+      <div className="step-number">02</div>
+      <div className="step-title">The Consult</div>
+      <p className="step-desc">We connect via WhatsApp to finalize fabrics and measurements.</p>
+    </div>
+    <div className="process-step">
+      <div className="step-number">03</div>
+      <div className="step-title">The Craft</div>
+      <p className="step-desc">Your bespoke piece is hand-stitched and shipped to your door.</p>
+    </div>
+  </div>
+</section>
 
         <section className="form-section">
           <div className="form-wrapper">
@@ -192,14 +183,54 @@ function App() {
                 <h2 className="form-title">The Application</h2>
 
                 <div className="input-row">
-                  <div className="input-group">
-                    <label>Full Name</label>
-                    <input name="customerName" required onChange={handleChange} />
-                  </div>
-                  <div className="input-group">
-                    <label>WhatsApp Number</label>
-                    <input name="phoneNumber" type="tel" required onChange={handleChange} placeholder="+91" />
-                  </div>
+                   <div className="input-group">
+  <label>Design Reference / Sketch</label>
+  
+  <div 
+    className={`upload-trigger ${formData.referenceImageUrl ? 'active-upload' : ''}`} 
+    onClick={() => document.getElementById('fileInput').click()}
+    style={{ 
+      position: 'relative', 
+      overflow: 'hidden', 
+      minHeight: '120px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }}
+  >
+    {formData.referenceImageUrl ? (
+      // SHOW PREVIEW IF IMAGE EXISTS
+      <>
+        <img 
+          src={formData.referenceImageUrl} 
+          alt="Preview" 
+          style={{ 
+            position: 'absolute', 
+            width: '100%', 
+            height: '100%', 
+            objectFit: 'cover', 
+            opacity: '0.3', // Fade it out slightly so text is visible
+            zIndex: 1
+          }} 
+        />
+        <div style={{ zIndex: 2, position: 'relative' }}>
+          <i className="ri-check-line" style={{ fontSize: '1.5rem', color: '#2C3E50' }}></i>
+          <p style={{ fontSize: '0.8rem', fontWeight: 'bold', margin: '5px 0' }}>Image Attached</p>
+          <span style={{ fontSize: '0.6rem', textDecoration: 'underline' }}>Click to change</span>
+        </div>
+      </>
+    ) : (
+      // SHOW DEFAULT STATE
+      <>
+        <i className="ri-upload-cloud-line" style={{ fontSize: '1.5rem', color: '#888' }}></i>
+        <p style={{ fontSize: '0.8rem', marginTop: '5px', color: '#888' }}>+ Upload Moodboard</p>
+      </>
+    )}
+    
+    <input id="fileInput" type="file" accept="image/*" hidden onChange={handleImageUpload} />
+  </div>
+</div>
                 </div>
 
                 <h3 style={{fontSize: '13px', textTransform: 'uppercase', color: '#2C3E50', marginBottom: '20px', letterSpacing: '2px', borderBottom: '1px solid #eee', paddingBottom: '10px', marginTop: '40px'}}>Shipping Details</h3>
@@ -276,13 +307,12 @@ function App() {
             )}
           </div>
         </section>
-        {/* 4.5 FAQ SECTION */}
-      <section className="faq-section">
+          <section className="faq-section">
         <h2 className="form-title" style={{fontSize: '2rem'}}>Common Questions</h2>
         
         <div className="faq-item">
           <div className="faq-question">Is the outfit really free? <span>+</span></div>
-          <div className="faq-answer">Yes. For our Beta Launch, we are selecting 50 users to receive a custom stitched outfit (stitching cost waived). We will provide the fabric at no cost, or you may choose to provide your own fabric.</div>
+          <div className="faq-answer">Yes. For our Beta Launch, we are selecting 50 users to receive a custom stitched outfit (stitching cost waived). You can use our fabric at no charge, or bring your own fabric — whichever you prefer. .</div>
         </div>
 
         <div className="faq-item">
@@ -295,14 +325,13 @@ function App() {
           <div className="faq-answer">Absolutely. We specialize in replicating designs from social media references. Upload the screenshot in the form above.</div>
         </div>
       </section>
-
-       {/* 5. FAT FOOTER */}
+          {/* 5. FAT FOOTER */}
       <footer className="fat-footer">
         <div className="footer-grid">
           <div className="footer-col" style={{flex: 2}}>
             <div className="brand-logo" style={{color: '#fff', fontSize: '1.5rem'}}>SHAROMÉ</div>
             <p style={{color: '#888', marginTop: '20px', maxWidth: '300px'}}>
-             We're just getting started. This is an early version of our website and currently functions as an invitation portal while we shape what's coming next
+              Currently operating as an invitation-only portal. The full experience launches soon.
             </p>
           </div>
           
@@ -327,9 +356,7 @@ function App() {
           © 2025 Sharomé Clothing. All Rights Reserved.
         </div>
       </footer>
-        
-        {/* 6. CONCIERGE BUTTON (Updated) */}
-      <a 
+        <a 
         href="https://wa.me/919266390099?text=Hi%20Sharome,%20I%20would%20like%20to%20inquire%20about%20the%20beta%20program." 
         className="whatsapp-float" 
         target="_blank" 
@@ -339,9 +366,8 @@ function App() {
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
           <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9.06 9.06 0 0 0 8 15z"/>
         </svg>
-        Chat with us
+        with us
       </a>
-
       </div>
     </>
   )
